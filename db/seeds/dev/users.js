@@ -7,11 +7,15 @@ exports.seed = function(knex, Promise) {
       return knex("users").insert([
         {
           id: 1,
-          role: "admin"
+          role: "admin",
+          email: "e@m.co",
+          password: "12345678"
         },
         {
           id: 2,
-          role: "guest"
+          role: "guest",
+          email: "e2@m.co",
+          password: "12345678"
         }
       ]);
     });
