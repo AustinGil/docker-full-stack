@@ -1,0 +1,28 @@
+{
+  "name": "node-sandbox",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "db:init": "knex init",
+    "migrate:make": "knex migrate:make --",
+    "migrate:latest": "knex migrate:latest",
+    "seed:make": "knex seed:make --",
+    "seed:run": "knex seed:run",
+    "docker": "docker-compose up -d",
+    "restart": "docker-compose restart",
+    "stopper": "docker-compose down",
+    "rebuild": "docker-compose up --build -d",
+    "ssh": "docker exec -i -t graphql_graphql_1 /bin/bash",
+    "seed": "node ./seed"
+  },
+  "dependencies": {
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "knex": "^0.15.2",
+    "sqlite3": "^4.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.5"
+  }
+}
