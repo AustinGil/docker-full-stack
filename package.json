@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js",
-    "devlocal": "NODE_ENV=\"local\" nodemon index.js",
-    "db:init": "knex init",
     "migrate:make": "knex migrate:make --",
     "migrate:latest": "knex migrate:latest",
     "seed:make": "knex seed:make --",
@@ -14,7 +11,11 @@
     "docker:restart": "docker-compose restart",
     "docker:stop": "docker-compose down",
     "docker:rebuild": "docker-compose up --build -d",
-    "docker:ssh": "docker exec -i -t node-sandbox_node_1 /bin/bash"
+    "docker:ssh": "docker exec -i -t node-sandbox_node_1 /bin/bash",
+    "dev": "nodemon index.js",
+    "local:dev": "NODE_ENV=\"local\" nodemon index.js",
+    "local:migrate": "NODE_ENV=\"local\" knex migrate:latest",
+    "local:seed": "NODE_ENV=\"local\" knex seed:run"
   },
   "dependencies": {
     "bcrypt": "^3.0.0",
