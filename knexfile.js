@@ -1,17 +1,35 @@
 // Update with your config settings.
 
 module.exports = {
-  development: {
+  local: {
     client: "sqlite3",
     connection: {
       database: "my_db",
-      filename: "./db/dev.sqlite3"
+      filename: "./knex/dev.sqlite3"
     },
     migrations: {
-      directory: "./db/migrations"
+      directory: "./knex/migrations"
     },
     seeds: {
-      directory: "./db/seeds/dev"
+      directory: "./knex/seeds/dev"
+    },
+    useNullAsDefault: true
+    // debug: true,
+  },
+
+  development: {
+    client: "mysql",
+    connection: {
+      host: "mysql", // Name of service in docker-compose.yml
+      database: process.env.MYSQL_DATABASE,
+      user: process.env.MYSQL_USER,
+      password: process.env.MYSQL_PASSWORD
+    },
+    migrations: {
+      directory: "./knex/migrations"
+    },
+    seeds: {
+      directory: "./knex/seeds/dev"
     },
     useNullAsDefault: true
     // debug: true,
