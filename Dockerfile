@@ -9,7 +9,5 @@ RUN npm install
 # If you are building your code for production
 # RUN npm install --only=production
 
-EXPOSE 4000
-
 CMD npm run dev
 
