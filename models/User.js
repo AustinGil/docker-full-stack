@@ -19,15 +19,14 @@ const hashPassword = password => {
 };
 
 const createUser = user => {
-  // return database
-  //   .raw(
-  //     "INSERT INTO users (username, password, token) VALUES (?, ?, ?) RETURNING id, username, token",
-  //     [user.username, user.password, user.token]
-  //   )
-  //   .then(data => data.rows[0]);
   return database("users")
-    .returning(["id", "username", "email", "role"])
-    .insert(user);
+    .insert(user)
+    .then(data => {
+      return {
+        id: data[0],
+        ...user
+      };
+    });
 };
 
 const createToken = () => {
@@ -42,15 +41,16 @@ const register = (request, response) => {
   const user = request.body;
   hashPassword(user.password)
     .then(hashedPassword => {
-      // delete user.password;
       user.password = hashedPassword;
     })
     .then(() => createToken())
-    .then(token => (user.token = token))
+    .then(token => {
+      user.token = token;
+    })
     .then(() => createUser(user))
     .then(user => {
-      // delete user.password_digest;
-      response.status(201).json({ user });
+      delete user.password;
+      response.status(201).json(user);
     })
     .catch(err => {
       response.status(403).json(err);
