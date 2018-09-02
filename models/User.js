@@ -4,6 +4,8 @@ const database = require("knex")(configuration);
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
 
+// TODO: add validation - https://github.com/chriso/validator.js
+
 // Log the SQL queries
 database.on("query", function(queryData) {
   console.log(queryData.sql);
