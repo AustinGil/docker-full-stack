@@ -1,7 +1,7 @@
 const server = require("express")();
 const { createRenderer } = require("vue-server-renderer");
 
-const createApp = require("./app");
+const createApp = require("/path/to/built-server-bundle.js");
 
 const renderer = createRenderer({
   template: require("fs").readFileSync("./index.html", "utf-8")
@@ -9,21 +9,26 @@ const renderer = createRenderer({
 
 server.get("*", (req, res) => {
   const context = {
-    url: req.url,
-    title: "hello",
-    meta: `
-			<meta ...>
-			<meta ...>
-		`
+    url: req.url
+    // title: "hello",
+    // meta: `
+    // 	<meta ...>
+    // 	<meta ...>
+    // `
   };
-  const app = createApp(context);
 
-  renderer.renderToString(app, context, (err, html) => {
-    if (err) {
-      res.status(500).end("Internal Server Error");
-      return;
-    }
-    res.end(html);
+  createApp(context).then(app => {
+    renderer.renderToString(app, (err, html) => {
+      if (err) {
+        if (err.code === 404) {
+          res.status(404).end("Page not found");
+        } else {
+          res.status(500).end("Internal Server Error");
+        }
+      } else {
+        res.end(html);
+      }
+    });
   });
 });
 
