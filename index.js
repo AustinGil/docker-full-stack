@@ -7,7 +7,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-const User = require("./models/User");
+const User = require("./controllers/User");
 
 app.get("/", (request, response) => {
   response.send("hello world");
