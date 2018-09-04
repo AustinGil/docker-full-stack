@@ -1,9 +1,12 @@
 # Latest version of Node
 FROM node:carbon
 
-WORKDIR /app
+# RUN apt-get update && apt-get install -qqy nano
 
-COPY . /app
+WORKDIR /node
+
+COPY ./node .
+COPY .env ..
 
 RUN npm install
 # If you are building your code for production

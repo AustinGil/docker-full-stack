@@ -1,0 +1,34 @@
+{
+  "name": "node-sandbox",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "migrate:make": "knex migrate:make --",
+    "migrate:latest": "knex migrate:latest",
+    "seed:make": "knex seed:make --",
+    "seed:run": "knex seed:run",
+    "dev_lite": "NODE_ENV=\"local\" nodemon index.js",
+    "migrate_lite": "NODE_ENV=\"local\" knex migrate:latest",
+    "seed_lite": "NODE_ENV=\"local\" knex seed:run",
+    "dock:up": "docker-compose up -d",
+    "dock:dev": "nodemon index.js",
+    "dock:restart": "docker-compose restart",
+    "dock:down": "docker-compose down",
+    "dock:rebuild": "docker-compose up --build -d",
+    "dock:ssh": "docker exec -i -t node-sandbox_node_1 /bin/bash"
+  },
+  "dependencies": {
+    "bcrypt": "^3.0.0",
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "knex": "^0.15.2",
+    "morgan": "^1.9.0",
+    "mysql": "^2.16.0",
+    "sqlite3": "^4.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.5"
+  }
+}

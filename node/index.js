@@ -1,11 +1,18 @@
-require("dotenv").config();
+const path = require("path");
+require("dotenv").config({ path: path.join(__dirname, "../.env") });
 const express = require("express");
-var bodyParser = require("body-parser");
-var cors = require("cors");
+const logger = require("morgan");
+const bodyParser = require("body-parser");
+const cors = require("cors");
 
 const app = express();
-app.use(bodyParser.json());
+
 app.use(cors());
+app.use(logger("dev"));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(cookieParser());
+app.use(express.static(path.join(__dirname, "public")));
 
 const User = require("./controllers/User");
 

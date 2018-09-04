@@ -1,15 +1,17 @@
 version: "3"
 services:
   node:
-    build: .
+    build:
+      context: .
+      dockerfile: ./node/Dockerfile
     volumes:
-      - .:/app
+      - ./node:/node
     ports:
       - ${PORT}:${PORT}
     depends_on:
       - mysql
     environment:
-      DB_HOST: mysql
+      DB_HOST: mysql # target container name
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_USER: ${MYSQL_USER}
