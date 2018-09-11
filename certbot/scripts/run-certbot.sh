@@ -4,5 +4,4 @@
 
 certbot certonly --webroot -w /data/letsencrypt --staging --agree-tos --register-unsafely-without-email --non-interactive --text -d "$DOMAIN" --force-renewal
 
-cp /etc/letsencrypt/live/"$DOMAIN"/cert.pem /data/certs/"$DOMAIN"/cert.pem
-cp /etc/letsencrypt/live/"$DOMAIN"/privkey.pem /data/certs/"$DOMAIN"/privkey.pem
+mkdir -p /data/certs/"$DOMAIN" && cp /etc/letsencrypt/live/"$DOMAIN"/{cert.pem, privkey.pem} "$_"
