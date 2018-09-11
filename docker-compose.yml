@@ -39,9 +39,8 @@ services:
     image: nginx:latest
     volumes:
       - ./nginx:/etc/nginx
-      - ./certbot/letsencrypt/:/etc/letsencrypt
-      - ./certbot/certs-data:/data/letsencrypt
       - ./www:/data/www
+      - ./certbot/letsencrypt/:/data/letsencrypt
     ports:
       - 80:80
       - 443:443
