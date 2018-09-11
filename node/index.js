@@ -24,7 +24,7 @@ app.post("/register", User.register);
 app.get("/users", User.getUsers);
 app.get("/users/:id", User.getUser);
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Listening on port: ${PORT}`);
+const port = process.env.NODE_PORT || 3000;
+app.listen(port, () => {
+  console.log(`Listening on port: ${port}`);
 });

@@ -6,8 +6,8 @@ services:
       dockerfile: ./node/Dockerfile
     volumes:
       - ./node:/node
-    ports:
-      - ${PORT}:${PORT}
+    # ports:
+    #   - ${PORT}:${PORT}
     depends_on:
       - mysql
     environment:
@@ -17,6 +17,8 @@ services:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     restart: always
+    expose:
+      - ${NODE_PORT}
 
   mysql:
     image: mysql:5.7
@@ -27,9 +29,11 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
       - ./mysql:/var/lib/mysql
-    ports:
-      - ${MYSQL_PORT}:${MYSQL_PORT}
+    # ports:
+    #   - ${MYSQL_PORT}:${MYSQL_PORT}
     restart: always
+    expose:
+      - ${MYSQL_PORT}
 
   nginx:
     image: nginx:latest
@@ -42,3 +46,21 @@ services:
     depends_on:
       - node
     restart: always
+
+  certbot:
+    build:
+      context: ./certbot
+      # dockerfile: ./node/Dockerfile
+    # image: certbot/certbot
+    environment:
+      DOMAIN: ${DOMAIN}
+      EMAIL: ${EMAIL}
+    # command: sudo certbot --nginx && sudo certbot renew --dry-run
+    # image: ubuntu
+    # command: tail -F anything
+    # command: certonly --webroot -w /var/www -d "$DOMAIN" --agree-tos --email "$EMAIL" --non-interactive --text
+    # volumes:
+    # - ./certbot:/test
+    entrypoint: /bin/sh
+    stdin_open: true
+    tty: true
