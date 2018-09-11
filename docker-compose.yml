@@ -1,66 +1,66 @@
 version: "3"
 services:
-  node:
-    build:
-      context: .
-      dockerfile: ./node/Dockerfile
-    volumes:
-      - ./node:/node
-    # ports:
-    #   - ${PORT}:${PORT}
-    depends_on:
-      - mysql
-    environment:
-      DB_HOST: mysql # target container name
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-    restart: always
-    expose:
-      - ${NODE_PORT}
+  # node:
+  #   build:
+  #     context: .
+  #     dockerfile: ./node/Dockerfile
+  #   volumes:
+  #     - ./node:/node
+  #   # ports:
+  #   #   - ${PORT}:${PORT}
+  #   depends_on:
+  #     - mysql
+  #   environment:
+  #     DB_HOST: mysql # target container name
+  #     MYSQL_DATABASE: ${MYSQL_DATABASE}
+  #     MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+  #     MYSQL_USER: ${MYSQL_USER}
+  #     MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+  #   restart: always
+  #   expose:
+  #     - ${NODE_PORT}
 
-  mysql:
-    image: mysql:5.7
-    environment:
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-    volumes:
-      - ./mysql:/var/lib/mysql
-    # ports:
-    #   - ${MYSQL_PORT}:${MYSQL_PORT}
-    restart: always
-    expose:
-      - ${MYSQL_PORT}
+  # mysql:
+  #   image: mysql:5.7
+  #   environment:
+  #     MYSQL_DATABASE: ${MYSQL_DATABASE}
+  #     MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+  #     MYSQL_USER: ${MYSQL_USER}
+  #     MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+  #   volumes:
+  #     - ./mysql:/var/lib/mysql
+  #   # ports:
+  #   #   - ${MYSQL_PORT}:${MYSQL_PORT}
+  #   restart: always
+  #   expose:
+  #     - ${MYSQL_PORT}
 
   nginx:
     image: nginx:latest
     volumes:
       - ./nginx:/etc/nginx
+      - ./certbot/certs/:/etc/letsencrypt
+      - ./certbot/certs-data:/data/letsencrypt
       - ./www:/data/www
     ports:
       - 80:80
       - 443:443
-    depends_on:
-      - node
+    # depends_on:
+    #   - node
     restart: always
+    tty: true
 
   certbot:
-    build:
-      context: ./certbot
-      # dockerfile: ./node/Dockerfile
     # image: certbot/certbot
+    # image: ubuntu
+    build:
+      context: .
+      dockerfile: ./certbot/Dockerfile
+    volumes:
+      - ./certbot:/test
+    # links:
+    #   - nginx
     environment:
       DOMAIN: ${DOMAIN}
       EMAIL: ${EMAIL}
-    # command: sudo certbot --nginx && sudo certbot renew --dry-run
-    # image: ubuntu
-    # command: tail -F anything
-    # command: certonly --webroot -w /var/www -d "$DOMAIN" --agree-tos --email "$EMAIL" --non-interactive --text
-    # volumes:
-    # - ./certbot:/test
-    entrypoint: /bin/sh
-    stdin_open: true
     tty: true
