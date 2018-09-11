@@ -40,7 +40,7 @@ services:
     volumes:
       - ./nginx:/etc/nginx
       - ./certbot/letsencrypt/:/etc/letsencrypt
-      # - ./certbot/certs-data:/data/letsencrypt
+      - ./certbot/certs-data:/data/letsencrypt
       - ./www:/data/www
     ports:
       - 80:80
@@ -58,6 +58,7 @@ services:
       dockerfile: ./certbot/Dockerfile
     volumes:
       - ./certbot/letsencrypt:/etc/letsencrypt
+      - ./certbot/certs-data:/data/letsencrypt
     # links:
     #   - nginx
     environment:
