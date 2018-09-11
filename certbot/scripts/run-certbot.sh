@@ -2,7 +2,7 @@
 
 # certbot certonly --webroot -w /etc/letsencrypt -d "$DOMAIN" -d "www.$DOMAIN" --agree-tos --email "$EMAIL" --non-interactive --text
 
-certbot certonly --webroot -w /data/letsencrypt --staging --agree-tos --register-unsafely-without-email --non-interactive --text -d "$DOMAIN"
+certbot certonly --webroot -w /data/letsencrypt --staging --agree-tos --register-unsafely-without-email --non-interactive --text -d "$DOMAIN" --force-renewal
 
 cp /etc/letsencrypt/live/"$DOMAIN"/cert.pem /data/certs/"$DOMAIN"/cert.pem
 cp /etc/letsencrypt/live/"$DOMAIN"/privkey.pem /data/certs/"$DOMAIN"/privkey.pem
