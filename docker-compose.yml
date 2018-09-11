@@ -57,8 +57,8 @@ services:
       context: .
       dockerfile: ./certbot/Dockerfile
     volumes:
-      - ./certbot/letsencrypt:/etc/letsencrypt
-      - ./certbot/certs-data:/data/letsencrypt
+      - ./certbot/letsencrypt:/data/letsencrypt
+      - ./certbot/certs:/data/certs
     # links:
     #   - nginx
     environment:
