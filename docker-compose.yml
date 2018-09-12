@@ -45,11 +45,13 @@ services:
     volumes:
       - ./www:/data/www
       - ./certbot/letsencrypt/:/data/letsencrypt
+      - ./certbot/certs:/data/certs
     ports:
       - 80:80
       - 443:443
-    # depends_on:
-    #   - node
+    depends_on:
+      - certbot
+    # - node
     restart: always
 
   certbot:
