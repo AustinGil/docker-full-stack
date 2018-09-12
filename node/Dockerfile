@@ -5,12 +5,12 @@ FROM node:carbon
 
 WORKDIR /node
 
-COPY ./node .
-COPY .env ..
+COPY ../.env ..
 
-RUN npm install
+# RUN npm install
 # If you are building your code for production
 # RUN npm install --only=production
 
-CMD npm run dock:dev
-
+# CMD npm run dock:dev
+CMD node index.js
+# CMD npm start

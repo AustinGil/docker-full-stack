@@ -10,30 +10,23 @@ services:
       - ./node:/node
     expose:
       - ${NODE_PORT}
-    # depends_on:
-    #   - mysql
-    # environment:
-    #   DB_HOST: mysql # target container name
-    #   MYSQL_DATABASE: ${MYSQL_DATABASE}
-    #   MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-    #   MYSQL_USER: ${MYSQL_USER}
-    #   MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    depends_on:
+      - mysql
     restart: always
 
-  # mysql:
-  #   image: mysql:5.7
-  #   environment:
-  #     MYSQL_DATABASE: ${MYSQL_DATABASE}
-  #     MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-  #     MYSQL_USER: ${MYSQL_USER}
-  #     MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-  #   volumes:
-  #     - ./mysql:/var/lib/mysql
-  #   # ports:
-  #   #   - ${MYSQL_PORT}:${MYSQL_PORT}
-  #   restart: always
-  #   expose:
-  #     - ${MYSQL_PORT}
+  mysql:
+    image: mysql:5.7
+    container_name: ${PROJECT_NAME}_mysql
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - ./mysql:/var/lib/mysql
+    restart: always
+    expose:
+      - ${MYSQL_PORT}
 
   nginx:
     image: ${PROJECT_NAME}/nginx:latest
@@ -42,20 +35,18 @@ services:
       context: ./nginx
       args:
         domain: ${DOMAIN}
-        response: proxy_pass https://node:${NODE_PORT}
+        response: proxy_pass http://node:${NODE_PORT}
     volumes:
-      - ./www:/data/www
       - ./certbot/letsencrypt/:/data/letsencrypt
       - ./certbot/certs:/data/certs
     ports:
       - 80:80
       - 443:443
-    # depends_on:
-    #   - node
     restart: always
 
   certbot:
     image: ${PROJECT_NAME}/certbot:latest
+    container_name: ${PROJECT_NAME}_certbot
     build:
       context: .
       dockerfile: ./certbot/Dockerfile
@@ -65,4 +56,5 @@ services:
     environment:
       DOMAIN: ${DOMAIN}
       EMAIL: ${EMAIL}
+      ENVIRONMENT: ${ENVIRONMENT}
     tty: true
