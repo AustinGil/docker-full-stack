@@ -53,15 +53,16 @@ services:
     # depends_on:
     #   - node
     restart: always
-  # certbot:
-  #   image: ${PROJECT_NAME}/certbot:latest
-  #   build:
-  #     context: .
-  #     dockerfile: ./certbot/Dockerfile
-  #   volumes:
-  #     - ./certbot/letsencrypt:/data/letsencrypt
-  #     - ./certbot/certs:/data/certs
-  #   environment:
-  #     DOMAIN: ${DOMAIN}
-  #     EMAIL: ${EMAIL}
-  #   tty: true
+
+  certbot:
+    image: ${PROJECT_NAME}/certbot:latest
+    build:
+      context: .
+      dockerfile: ./certbot/Dockerfile
+    volumes:
+      - ./certbot/letsencrypt:/data/letsencrypt
+      - ./certbot/certs:/data/certs
+    environment:
+      DOMAIN: ${DOMAIN}
+      EMAIL: ${EMAIL}
+    tty: true
