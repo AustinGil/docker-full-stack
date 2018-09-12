@@ -36,9 +36,11 @@ services:
   #     - ${MYSQL_PORT}
 
   nginx:
-    image: nginx:latest
+    build:
+      context: ./nginx
+      args:
+        domain: ${DOMAIN}
     volumes:
-      - ./nginx:/etc/nginx
       - ./www:/data/www
       - ./certbot/letsencrypt/:/data/letsencrypt
     ports:
@@ -47,19 +49,14 @@ services:
     # depends_on:
     #   - node
     restart: always
-    tty: true
 
   certbot:
-    # image: certbot/certbot
-    # image: ubuntu
     build:
       context: .
       dockerfile: ./certbot/Dockerfile
     volumes:
       - ./certbot/letsencrypt:/data/letsencrypt
       - ./certbot/certs:/data/certs
-    # links:
-    #   - nginx
     environment:
       DOMAIN: ${DOMAIN}
       EMAIL: ${EMAIL}
