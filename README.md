@@ -12,3 +12,7 @@
 - docker-compose up --build -d
 - docker exec -it node-sandbox_node_1 /bin/bash
 - docker-compose run --rm node
+
+## Helpful Certbot commands
+
+- certbot delete --cert-name example.com

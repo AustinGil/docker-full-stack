@@ -14,15 +14,17 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-const User = require("./controllers/User");
+// const User = require("./controllers/User");
 
 app.get("/", (request, response) => {
-  response.send("hello world");
+  response.json({
+    response: "hello world"
+  });
 });
 
-app.post("/register", User.register);
-app.get("/users", User.getUsers);
-app.get("/users/:id", User.getUser);
+// app.post("/register", User.register);
+// app.get("/users", User.getUsers);
+// app.get("/users/:id", User.getUser);
 
 const port = process.env.NODE_PORT || 3000;
 app.listen(port, () => {
