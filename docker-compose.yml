@@ -49,9 +49,9 @@ services:
     ports:
       - 80:80
       - 443:443
-    depends_on:
-      - certbot
-    # - node
+    # depends_on:
+    #   - certbot
+    #   - node
     restart: always
 
   certbot:
