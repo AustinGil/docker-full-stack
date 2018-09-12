@@ -1,6 +1,7 @@
 version: "3"
 services:
   # node:
+  #   image: ${PROJECT_NAME}/node:latest
   #   build:
   #     context: .
   #     dockerfile: ./node/Dockerfile
@@ -36,6 +37,7 @@ services:
   #     - ${MYSQL_PORT}
 
   nginx:
+    image: ${PROJECT_NAME}/nginx:latest
     build:
       context: ./nginx
       args:
@@ -51,6 +53,7 @@ services:
     restart: always
 
   certbot:
+    image: ${PROJECT_NAME}/certbot:latest
     build:
       context: .
       dockerfile: ./certbot/Dockerfile
