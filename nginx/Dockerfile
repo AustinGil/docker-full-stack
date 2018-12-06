@@ -4,5 +4,7 @@ FROM nginx:latest
 ARG domain
 ARG response
 
+RUN echo $domain
+
 COPY ./template.conf /etc/nginx
 RUN sed -i -e "s,TARGET_DOMAIN,$domain,g;s,ROOT_RESPONSE,$response,g" /etc/nginx/template.conf && mv /etc/nginx/template.conf /etc/nginx/nginx.conf

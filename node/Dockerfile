@@ -5,7 +5,7 @@ FROM node:carbon
 
 WORKDIR /node
 
-COPY ../.env ..
+COPY .env ..
 
 RUN npm install
 # If you are building your code for production

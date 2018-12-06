@@ -19,7 +19,7 @@ http://www.benmccann.com/ssl-on-localhost-with-nginx/
 - docker-compose restart
 - docker-compose down
 - docker-compose up --build -d
-- docker exec -it node-sandbox_node_1 /bin/bash
+- docker-compose exec node /bin/bash
 - docker-compose run --rm node
 - docker image prune
 
